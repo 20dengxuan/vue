@@ -2,6 +2,7 @@ const path = require('path')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
+const webpack = require('webpack')
 
 module.exports = {
     entry: './src/main.js',
@@ -10,6 +11,7 @@ module.exports = {
         filename: 'app.js',
         path: path.resolve(__dirname, 'dist')
     },
+    devtool: 'inline-source-map',
     module: {
        rules: [
            {
@@ -40,6 +42,10 @@ module.exports = {
            },{
                test:/\.less$/,
                use:['style-loader','css-loader','postcss-loader','less-loader']
+           },{
+             test: /\.js$/,
+             exclude: /node_modules/,
+             loader: 'babel-loader'
            }
        ]
     },
@@ -48,11 +54,17 @@ module.exports = {
         new HtmlWebpackPlugin({
             template:'./index.html'
         }),
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
+        new webpack.HotModuleReplacementPlugin()
     ],
     resolve:{
         alias: {
             'vue': 'vue/dist/vue.js'
         }
+    },
+    devServer: {
+        static:'./dist',
+        open:true,
+        hot: true
     }
 }

@@ -1,5 +1,9 @@
 <template>
-  <div class="h">this is app<div class="j">jjj</div></div>
+ <div>
+    <div class="h">this is app<div class="j">jjjhhkk</div></div>
+  <div>{{ list }}jj</div>hhh
+  <button @click="pushList">push</button>
+ </div>
 </template>
 
 <script>
@@ -7,8 +11,21 @@ import img from './assets/images/test.png'
 import './assets/styles/test.css'
 export default {
   name:"App",
+  data(){
+    return{
+      list:['aa']
+    }
+  },
   mounted(){
-    console.log(img)
+    let a = 1;
+    let b = 2;
+    [a,b] = [b,a];
+    console.log(a,b)
+  },
+  methods:{
+    pushList(){
+      this.list.push('aa'+this.list.length)
+    }
   }
 }
 </script>
